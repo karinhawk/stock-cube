@@ -1,8 +1,43 @@
+import { GetServerSideProps, GetStaticProps } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import dynamic from "next/dynamic";
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
+import {PlotParams} from 'react-plotly.js';
 
-export default function Home() {
+interface HomePageProps {
+  stocks: {
+    metadata: {
+      info : string,
+      symbol : string,
+      last_refreshed : string,
+      interval : string,
+      output_size : string,
+      time_zone : string
+    }
+    timeSeries: {
+      open : string,
+      high : string,
+      low : string,
+      close : string,
+      volume : string
+    }
+  }
+}
+export default function Home({ stocks }: HomePageProps) {
+  const stocksArr = Object.values(stocks);
+  const stocksXValue = [];
+  const stocksYValue = [];
+  for(let key in stocksArr[1]){
+    stocksXValue.push(key);
+    stocksYValue.push(stocksArr[1][key]["1. open"])
+  }
+  console.log(stocksYValue);
+  // console.log(stocksXValue);
+  
+  
+  
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -12,60 +47,37 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+          <h1>hello</h1>
+          <Plot
+        data={[
+          {
+            x: stocksXValue,
+            y: stocksYValue,
+            type: 'scatter',
+            // mode: 'lines',
+            marker: {color: 'red'},
+          },
+        ]}
+        layout={ {width: 700, height: 500, title: 'Stocks!'} }
+      />
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        hi
       </footer>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const res = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=60min&apikey=${process.env.NEXT_PUBLIC_STOCKAPI_ACCESS_KEY}`)
+  const stocks = await res.json();
+  console.log(stocks);
+  
+
+  return {
+      props: {
+          stocks
+      }
+  }
 }
