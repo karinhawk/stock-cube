@@ -1,43 +1,28 @@
-import { GetServerSideProps, GetStaticProps } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import dynamic from "next/dynamic";
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
-import {PlotParams} from 'react-plotly.js';
+import Graph from '../Components/Graph';
+import { FormEvent, useEffect, useRef, useState } from 'react';
+import SearchBar from '../Components/SearchBar';
 
-interface HomePageProps {
-  stocks: {
-    metadata: {
-      info : string,
-      symbol : string,
-      last_refreshed : string,
-      interval : string,
-      output_size : string,
-      time_zone : string
-    }
-    timeSeries: {
-      open : string,
-      high : string,
-      low : string,
-      close : string,
-      volume : string
-    }
+export default function Home() {
+
+  const [stocks, setStocks] = useState(null)
+  const searchForm = useRef(null);
+
+  const getStocksData = async (company: string) => {
+    const res = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${company}&interval=60min&apikey=${process.env.NEXT_PUBLIC_STOCKAPI_ACCESS_KEY}`)
+    const stocksData = await res.json();
+    setStocks(stocksData)    
   }
-}
-export default function Home({ stocks }: HomePageProps) {
-  const stocksArr = Object.values(stocks);
-  const stocksXValue = [];
-  const stocksYValue = [];
-  for(let key in stocksArr[1]){
-    stocksXValue.push(key);
-    stocksYValue.push(stocksArr[1][key]["1. open"])
+
+  const searchForStocks = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const company: string = searchForm.current.value;
+    console.log(company);
+    getStocksData(company);
+    searchForm.current.value = "";
   }
-  console.log(stocksYValue);
-  // console.log(stocksXValue);
-  
-  
-  
-  
+
   return (
     <div className={styles.container}>
       <Head>
@@ -47,19 +32,8 @@ export default function Home({ stocks }: HomePageProps) {
       </Head>
 
       <main className={styles.main}>
-          <h1>hello</h1>
-          <Plot
-        data={[
-          {
-            x: stocksXValue,
-            y: stocksYValue,
-            type: 'scatter',
-            // mode: 'lines',
-            marker: {color: 'red'},
-          },
-        ]}
-        layout={ {width: 700, height: 500, title: 'Stocks!'} }
-      />
+        <SearchBar searchForStocks={searchForStocks} searchForm={searchForm}/>
+        {stocks != null && <Graph stocks={stocks} />}
       </main>
 
       <footer className={styles.footer}>
@@ -69,15 +43,3 @@ export default function Home({ stocks }: HomePageProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=60min&apikey=${process.env.NEXT_PUBLIC_STOCKAPI_ACCESS_KEY}`)
-  const stocks = await res.json();
-  console.log(stocks);
-  
-
-  return {
-      props: {
-          stocks
-      }
-  }
-}
