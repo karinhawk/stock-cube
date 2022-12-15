@@ -1,7 +1,9 @@
+import styles from "../styles/Graph.module.scss"
 import { FunctionComponent } from "react";
 import dynamic from "next/dynamic";
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
 import { PlotParams } from 'react-plotly.js';
+import Summary from "../Components/Summary";
 
 
 interface Props {
@@ -14,7 +16,6 @@ interface Props {
 const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency}) => {
 
   const stocksArr = Object.values(stocks);
-  console.log(stocksArr);
 
     const stocksXValue = [];
   const stocksYValue = [];
@@ -24,17 +25,21 @@ const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency}) => {
     stocksYValue.push(stocksArr[1][key]["1. open"])
   }
   const yValArr = Object.values(stocksYValue);
-  console.log(yValArr);
   
-  const convertedYVals = yValArr.map((val) => { 
-    console.log(conversion);
-       
+  const convertedYVals = yValArr.map((val) => {      
    return parseFloat(val) * conversion
   })
 
+  const stockName = stocksArr[0]["2. Symbol"];
+  const latestPrice = convertedYVals[0].toFixed(2)
+  console.log(stocksArr);
+  
+ 
+  
+  
 
     return ( 
-        <>
+        <div className={styles.stocks}>
         <Plot
           data={[
             {
@@ -48,7 +53,7 @@ const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency}) => {
             {
               width: 900,
               height: 500,
-              title: 'Stocks for ' + stocksArr[0]["2. Symbol"],
+              title: 'Stocks for ' + stockName,
               xaxis: {
                 title: "Date"
               },
@@ -58,7 +63,8 @@ const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency}) => {
             }
           }
         />
-        </>
+        {stocks && <Summary strCurrency={strCurrency} latestPrice={latestPrice} stockName={stockName} />}
+        </div>
      );
 }
  

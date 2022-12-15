@@ -1,0 +1,16 @@
+.summary {
+    height: 30vh;
+    width: 25vw;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: whitesmoke;
+    color: black;
+
+    &__title {
+        font-size: 2rem;
+        text-align: center;
+    }
+    &__avgPrice {
+        font-size: 1rem;
+    }
+}

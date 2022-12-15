@@ -1,0 +1,12 @@
+.form {
+    width: 45vw;
+    &__text {
+        height: 5vh;
+        width: 40vw;
+    }
+
+    &__button {
+        height: 5vh;
+        width: 5vw;
+    }
+}
