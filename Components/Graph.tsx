@@ -7,10 +7,11 @@ import { PlotParams } from 'react-plotly.js';
 interface Props {
     stocksXValue: string[],
     stocksYValue: string[],
-    stocksArr: string[]
+    stocksArr: string[],
+    conversion: number
 }
  
-const Graph: FunctionComponent<Props> = ({stocks}) => {
+const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency}) => {
 
   const stocksArr = Object.values(stocks);
   console.log(stocksArr);
@@ -22,6 +23,15 @@ const Graph: FunctionComponent<Props> = ({stocks}) => {
     stocksXValue.push(key);
     stocksYValue.push(stocksArr[1][key]["1. open"])
   }
+  const yValArr = Object.values(stocksYValue);
+  console.log(yValArr);
+  
+  const convertedYVals = yValArr.map((val) => { 
+    console.log(conversion);
+       
+   return parseFloat(val) * conversion
+  })
+
 
     return ( 
         <>
@@ -29,7 +39,7 @@ const Graph: FunctionComponent<Props> = ({stocks}) => {
           data={[
             {
               x: stocksXValue,
-              y: stocksYValue,
+              y: convertedYVals,
               type: 'scatter',
               marker: { color: 'red' },
             },
@@ -43,7 +53,7 @@ const Graph: FunctionComponent<Props> = ({stocks}) => {
                 title: "Date"
               },
               yaxis: {
-                title: "Price per Unit ($)"
+                title: `Price per Unit ${strCurrency}`
               }
             }
           }
