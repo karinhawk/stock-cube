@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
 import { PlotParams } from 'react-plotly.js';
 import Summary from "../Components/Summary";
+import Suggested from "../Components/Suggested";
 
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
     conversion: number
 }
  
-const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency}) => {
+const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency, suggestedStocks}) => {
 
   const stocksArr = Object.values(stocks);
 
@@ -63,7 +64,10 @@ const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency}) => {
             }
           }
         />
+        <div className={styles.extras}>
         {stocks && <Summary strCurrency={strCurrency} latestPrice={latestPrice} stockName={stockName} />}
+        {stocks && <Suggested suggestedStocks={suggestedStocks}/>}
+        </div>
         </div>
      );
 }
