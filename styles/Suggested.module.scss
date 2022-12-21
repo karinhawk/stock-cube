@@ -1,7 +1,7 @@
 .suggested {
     height: fit-content;
-    width: 25vw;
-    padding: 1rem;
+    width: 20vw;
+    padding: 0.5rem 2rem;
     border-radius: 1rem;
     background-color: whitesmoke;
     color: black;
@@ -12,5 +12,9 @@
     }
     &__stock {
         font-size: 1rem;
+        &:hover {
+            cursor: pointer;
+            font-weight: 700;
+        }
     }
 }

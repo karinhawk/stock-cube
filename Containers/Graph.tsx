@@ -47,19 +47,24 @@ const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency, sugge
               x: stocksXValue,
               y: convertedYVals,
               type: 'scatter',
-              marker: { color: 'red' },
+              marker: { color: 'rgb(218, 186, 223)' },
             },
           ]}
           layout={
             {
               width: 900,
-              height: 500,
+              height: 550,
+              plot_bgcolor: "rgba(0,0,0,0)",
+              paper_bgcolor: "rgba(0,0,0,0)",
               title: 'Stocks for ' + stockName,
               xaxis: {
                 title: "Date"
               },
               yaxis: {
                 title: `Price per Unit ${strCurrency}`
+              },
+              font: {
+                color: "white"
               }
             }
           }
