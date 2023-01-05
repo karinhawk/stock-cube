@@ -2,7 +2,8 @@ import styles from "../styles/Search.module.scss"
 import React, { FC } from 'react'
 
 interface SearchProps {
-  searchForStocks: any
+  searchForStocks: () => void,
+  searchForm: any
 }
 
 const SearchBar: FC<SearchProps> = ({ searchForStocks, searchForm }) => {

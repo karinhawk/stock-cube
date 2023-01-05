@@ -4,11 +4,10 @@ import Graph from '../Containers/Graph';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import SearchBar from '../Components/SearchBar';
 import CurrencyToggle from '../Components/CurrencyToggle';
-import Summary from '../Components/Summary';
+import cube from "../public/assets/images/cube.png"
+import Image from 'next/image';
 
 export default function Home() {
-
-  //logo = a cube! with stocks on it!!!!!
 
   const [stocks, setStocks] = useState(null)
   const [currencies, setCurrencies] = useState(null)
@@ -36,7 +35,7 @@ export default function Home() {
     searchForm.current.value = "";
   }
 
-  const suggestedStocks = (e) => {    
+  const chooseSuggestedStocks = (e: FormEvent<HTMLFormElement>) => {    
     const company: string = e.target.id;
     console.log(company);
     getStocksData(company)
@@ -83,6 +82,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {stocks && <header className={styles.header}>
+        <Image src={cube} height={100} width={100} alt="cube logo with graphs on all sides"></Image>
         <h2 className={styles.title2}>STOCK-CUBE</h2>
       </header>}
 
@@ -91,7 +91,7 @@ export default function Home() {
           {!stocks && <h1 className={styles.title}>STOCK-CUBE</h1>}
           <SearchBar searchForStocks={searchForStocks} searchForm={searchForm} />
             {stocks && <CurrencyToggle calculateConversion={calculateConversion} />}
-              {stocks && <Graph stocks={stocks} conversion={conversion} strCurrency={strCurrency} suggestedStocks={suggestedStocks}/>}
+              {stocks && <Graph stocks={stocks} conversion={conversion} strCurrency={strCurrency} chooseSuggestedStocks={chooseSuggestedStocks}/>}
         </div>
       </main>
 

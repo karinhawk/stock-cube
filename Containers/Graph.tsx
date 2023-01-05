@@ -8,18 +8,21 @@ import Suggested from "../Components/Suggested";
 
 
 interface Props {
+    stocks: string[],
     stocksXValue: string[],
     stocksYValue: string[],
     stocksArr: string[],
-    conversion: number
+    conversion: number,
+    strCurrency: string,
+    chooseSuggestedStocks: () => void
 }
  
-const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency, suggestedStocks}) => {
+const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency, chooseSuggestedStocks}) => {
 
   const stocksArr = Object.values(stocks);
 
     const stocksXValue = [];
-  const stocksYValue = [];
+    const stocksYValue = [];
 
   for (let key in stocksArr[1]) {
     stocksXValue.push(key);
@@ -32,7 +35,7 @@ const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency, sugge
   })
 
   const stockName = stocksArr[0]["2. Symbol"];
-  const latestPrice = convertedYVals[0].toFixed(2)
+  const latestPrice = parseFloat(convertedYVals[0].toFixed(2))
   console.log(stocksArr);
   
  
@@ -71,7 +74,7 @@ const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency, sugge
         />
         <div className={styles.extras}>
         {stocks && <Summary strCurrency={strCurrency} latestPrice={latestPrice} stockName={stockName} />}
-        {stocks && <Suggested suggestedStocks={suggestedStocks}/>}
+        {stocks && <Suggested chooseSuggestedStocks={chooseSuggestedStocks}/>}
         </div>
         </div>
      );
