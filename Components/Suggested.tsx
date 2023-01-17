@@ -1,8 +1,8 @@
-import { FormEvent, FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import styles from "../styles/Suggested.module.scss"
 
 interface SuggestedProps {
-    chooseSuggestedStocks: (e: FormEvent<HTMLFormElement>) => void
+    chooseSuggestedStocks: (e: any) => void
 }
  
 const Suggested: FunctionComponent<SuggestedProps> = ({chooseSuggestedStocks}) => {

@@ -1,8 +1,8 @@
 import styles from "../styles/Search.module.scss"
-import React, { FC } from 'react'
+import React, {FC} from 'react'
 
 interface SearchProps {
-  searchForStocks: () => void,
+  searchForStocks: (e: any) => void,
   searchForm: any
 }
 

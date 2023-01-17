@@ -2,27 +2,23 @@ import styles from "../styles/Graph.module.scss"
 import { FunctionComponent } from "react";
 import dynamic from "next/dynamic";
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
-import { PlotParams } from 'react-plotly.js';
 import Summary from "../Components/Summary";
 import Suggested from "../Components/Suggested";
 
 
 interface Props {
     stocks: string[],
-    stocksXValue: string[],
-    stocksYValue: string[],
-    stocksArr: string[],
     conversion: number,
     strCurrency: string,
-    chooseSuggestedStocks: () => void
+    chooseSuggestedStocks: (e: MouseEvent) => void
 }
  
 const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency, chooseSuggestedStocks}) => {
 
-  const stocksArr = Object.values(stocks);
+  const stocksArr: any[] = Object.values(stocks);
 
-    const stocksXValue = [];
-    const stocksYValue = [];
+    const stocksXValue : string[] = [];
+    const stocksYValue : string[] = [];
 
   for (let key in stocksArr[1]) {
     stocksXValue.push(key);
@@ -55,8 +51,8 @@ const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency, choos
           ]}
           layout={
             {
-              width: 900,
-              height: 550,
+              width: 1000,
+              height: 650,
               plot_bgcolor: "rgba(0,0,0,0)",
               paper_bgcolor: "rgba(0,0,0,0)",
               title: 'Stocks for ' + stockName,
