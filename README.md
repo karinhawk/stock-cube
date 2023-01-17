@@ -1,34 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Weather App
 
-## Getting Started
+<img src="./public/assets/images/screenshot1.png" height="150px"/>
+<h1><a href="stock-cube.vercel.app">Visit Website</a></h1>
 
-First, run the development server:
+## Table of Contents
+- [About](#about)
+- [Screenshots](#screenshots)
+- [Languages](#languages)
+- [Code of Note](#code_of_note)
+- [Bugs to fix](#bugs_to_fix)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## About <a name = "about"></a>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+A simple app designed to display the latest data about stocks. The user can type in a stock name such as GOOG or AMZN and a plotly graph will display the latest trends. The user can also switch between currencies. For this I linked the stocks data pulled from Alpha Vantage to an accurate currency conversion API to make sure it stayed up to date. This was my first TypeScript project.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+---
 
-## Learn More
+## Screenshots <a name = "screenshots"></a>
 
-To learn more about Next.js, take a look at the following resources:
+<img src="./public/assets/images/screenshot1.png" height="150px"/>
+<img src="./public/assets/images/screenshot2.png" height="150px"/>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Languages <a name = "languages"></a>
 
-## Deploy on Vercel
+- NextJS (using TypeScript)
+- SCSS
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Code of Note <a name = "code_of_note"></a>
+
+- Plotly.js graph to display the stocks data which I pulled from a heavily nested JSON object, which is also fully styled.
+- My first use of TypeScript.
+- Linking a currency API to the stocks API for accurate stocks prices.
+- Designed a pretty cool logo
+
+---
+
+## Bugs to fix <a name = "bugs_to_fix"></a>
+
+- I want to implement an API which can let the user type in a company name rather than the trading name (Microsoft instead of MSFT) to make it more beginner friendly as the API I'm using for the stocks data only provides the trading name.
