@@ -1,4 +1,4 @@
-# Weather App
+# Stocks Tracker App
 
 <img src="./public/assets/images/screenshot1.png" height="150px"/>
 <h1><a href="stock-cube.vercel.app">Visit Website</a></h1>
