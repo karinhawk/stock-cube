@@ -20,7 +20,6 @@ export default function Home() {
       const res = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${company}&interval=60min&apikey=${process.env.NEXT_PUBLIC_STOCKAPI_ACCESS_KEY}`)
       const stocksData = await res.json();
       setStocks(stocksData)
-      console.log(stocks);
       
     } catch (error) {
       console.log(error);
@@ -30,7 +29,6 @@ export default function Home() {
   const searchForStocks = (e: any) => {
     e.preventDefault()
     const company: string = searchForm.current.value.toUpperCase();
-    console.log(company);
     getStocksData(company);
     searchForm.current.value = "";
   }
@@ -38,7 +36,6 @@ export default function Home() {
   const chooseSuggestedStocks = (e: MouseEvent) => {  
     const target = e.target as HTMLButtonElement;  
     const company: string = target.id;
-    console.log(company);
     getStocksData(company)
   }
 

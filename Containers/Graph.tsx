@@ -32,12 +32,8 @@ const Graph: FunctionComponent<Props> = ({stocks, conversion, strCurrency, choos
 
   const stockName = stocksArr[0]["2. Symbol"];
   const latestPrice = parseFloat(convertedYVals[0].toFixed(2))
-  console.log(stocksArr);
-  
- 
   
   
-
     return ( 
         <div className={styles.stocks}>
         <Plot
